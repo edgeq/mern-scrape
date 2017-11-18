@@ -1,6 +1,6 @@
 # NYT Scaper MongoDB / Express / React / Node App
 
-## About This Boilerplate
+## About This App
 
 NYT scraper using a MERN stack
 
