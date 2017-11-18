@@ -25,7 +25,12 @@ mongoose.connect(
 
 // TODO: move db stuff out
 const db = require('./models')
-console.log(db.Article)
+const {Article} = db
+Article.create({
+  title: 'manual insert',
+  url: 'http://example.org'
+}).then(x => console.log(x))
+.catch(x => console.error(x))
 /*End DB*/
 
 // Send every request to the React app
