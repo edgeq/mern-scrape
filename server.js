@@ -25,18 +25,38 @@ mongoose.connect(
 
 // TODO: move db stuff out
 const db = require('./models')
-const {Article} = db
-Article.create({
-  title: 'manual insert',
-  url: 'http://example.org'
-}).then(x => console.log(x))
-.catch(x => console.error(x))
+const { Article } = db
 /*End DB*/
+
+// routes
+app.post("/api/saved", (req, res) => {
+  //get the posted object
+  var article = req.body;
+  // call Article.create
+  //return some JSON (success | error)
+  Article.create(article).
+  then(() => {
+    res.json(article)
+    })
+    .catch((err) => {
+      res.json(err)
+    })
+})
+
+app.get('/api/saved', (req, res) => {
+  Article.find({}).then(articles => res.json(articles))
+})
+
+app.delete('/api/saved/:id', (req, res) => {
+  Article.remove({_id: req.params.id})
+    .then(articles => res.json(articles))
+})
+/*end routes*/
 
 // Send every request to the React app
 // Define any API routes before this runs
 app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  res.sendFile(path.join(__dirname, "./client/public/index.html"));
 });
 
 app.listen(PORT, function() {
